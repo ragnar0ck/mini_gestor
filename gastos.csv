@@ -14,7 +14,6 @@ data,descricao,categoria,tipo,valor
 2025-12-28,Cab,Transporte,Despesa,90.00
 2026-01-08,Walmart,Alimentação,Despesa,120.00
 2026-01-12,Costco,Mercado,Receita,250.00
-data,descricao,categoria,tipo,valor
 2025-01-07,No Frills,Mercado,Dinheiro,342.41
 2025-01-11,Costco,Mercado,Débito,176.54
 2025-01-19,No Frills,Mercado,Débito,334.36
