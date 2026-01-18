@@ -1,10 +1,9 @@
 import streamlit as st
-from utils import adicionar_gasto, ler_gastos
-import pandas as pd
+from utils import adicionar_gasto, ler_gastos, resumo_mes_atual
 
 st.title("Mini Gestor Financeiro Familiar")
 
-# Formulário de novo gasto
+# ===== FORMULÁRIO =====
 with st.form("form_gasto"):
     data = st.date_input("Data")
     descricao = st.text_input("Descrição")
@@ -17,7 +16,21 @@ with st.form("form_gasto"):
         adicionar_gasto(data, descricao, categoria, tipo, valor)
         st.success("Gasto adicionado!")
 
-# Exibir gastos
+# ===== RESUMO =====
+st.divider()
+st.subheader("Resumo do mês")
+
+total_mes, gastos_categoria = resumo_mes_atual()
+
+st.metric("Total gasto no mês", f"R$ {total_mes:.2f}")
+
+if not gastos_categoria.empty:
+    st.bar_chart(
+        gastos_categoria.set_index("categoria")
+    )
+
+# ===== LISTA DE GASTOS =====
+st.divider()
 st.subheader("Gastos registrados")
 df = ler_gastos()
 st.dataframe(df)
