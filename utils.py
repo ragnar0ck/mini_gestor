@@ -64,6 +64,22 @@ def comparar_meses(mes_base, mes_comparacao):
 
     return comparacao.reset_index()
 
+def gastos_por_categoria_mes(mes_ano):
+    df = pd.read_csv(CSV_FILE)
+    if df.empty:
+        return pd.DataFrame()
+
+    df["data"] = pd.to_datetime(df["data"])
+    df["mes_ano"] = df["data"].dt.to_period("M").astype(str)
+
+    df_mes = df[df["mes_ano"] == mes_ano]
+
+    return (
+        df_mes
+        .groupby("categoria")["valor"]
+        .sum()
+        .reset_index()
+    )
 
     df = pd.read_csv(CSV_FILE)
     if df.empty:

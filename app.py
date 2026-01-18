@@ -4,7 +4,7 @@ from utils import (
     ler_gastos,
     listar_meses_disponiveis,
     resumo_por_mes,
-    comparar_meses
+    gastos_por_categoria_mes
 )
 # =============================
 
@@ -89,37 +89,32 @@ else:
 # =============================
 
 st.divider()
-st.subheader("Comparação entre meses")
+st.subheader("Comparação de gastos")
 
 meses_disponiveis = listar_meses_disponiveis()
 
 if len(meses_disponiveis) < 2:
     st.info("É necessário ter pelo menos dois meses para comparar.")
 else:
-    col1, col2 = st.columns(2)
+    mes_atual = meses_disponiveis[0]
+    mes_anterior = meses_disponiveis[1]
 
-    with col1:
-        mes_base = st.selectbox(
-            "Mês base",
-            meses_disponiveis,
-            index=1
+    df_atual = gastos_por_categoria_mes(mes_atual)
+    df_anterior = gastos_por_categoria_mes(mes_anterior)
+
+    df_linhas = (
+        df_atual
+        .merge(
+            df_anterior,
+            on="categoria",
+            how="outer",
+            suffixes=(f" ({mes_atual})", f" ({mes_anterior})")
         )
+        .fillna(0)
+        .set_index("categoria")
+    )
 
-    with col2:
-        mes_comparacao = st.selectbox(
-            "Mês de comparação",
-            meses_disponiveis,
-            index=0
-        )
-
-    if mes_base != mes_comparacao:
-        df_comparacao = comparar_meses(mes_base, mes_comparacao)
-
-        st.dataframe(df_comparacao)
-
-        st.bar_chart(
-            df_comparacao.set_index("categoria")[["Diferença"]]
-        )
+    st.line_chart(df_linhas)
 
 # =============================
 # LISTA DE GASTOS
