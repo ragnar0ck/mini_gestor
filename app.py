@@ -1,5 +1,5 @@
 import streamlit as st
-from utils import adicionar_gasto, ler_gastos, resumo_mes_atual
+from utils import adicionar_gasto, ler_gastos, listar_meses_disponiveis, resumo_por_mes
 
 st.set_page_config(page_title="Mini Gestor Financeiro Familiar", layout="centered")
 
@@ -55,17 +55,26 @@ with st.form("form_gasto"):
 # RESUMO MENSAL
 # =============================
 st.divider()
-st.subheader("Resumo do mês")
+st.subheader("Resumo financeiro")
 
-total_mes, gastos_categoria = resumo_mes_atual()
-st.metric("Total gasto no mês", f"R$ {total_mes:.2f}")
+meses_disponiveis = listar_meses_disponiveis()
 
-if not gastos_categoria.empty:
-    st.bar_chart(
-        gastos_categoria.set_index("categoria")
-    )
+if not meses_disponiveis:
+    st.info("Nenhum gasto registrado ainda.")
 else:
-    st.info("Nenhum gasto registrado neste mês.")
+    mes_selecionado = st.selectbox(
+        "Selecione o mês",
+        meses_disponiveis
+    )
+
+    total_mes, gastos_categoria = resumo_por_mes(mes_selecionado)
+
+    st.metric("Total gasto no mês", f"R$ {total_mes:.2f}")
+
+    if not gastos_categoria.empty:
+        st.bar_chart(
+            gastos_categoria.set_index("categoria")
+        )
 
 # =============================
 # LISTA DE GASTOS
