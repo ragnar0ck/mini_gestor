@@ -1,1 +1,12 @@
 data,descricao,categoria,tipo,valor
+2025-12-05,Costco,Mercado,Despesa,150.75
+2026-01-10,Cab,Transporte,Receita,32.56
+2025-12-15,Cab,Transporte,Despesa,120.50
+2026-01-04,Walmart,Alimentação,Despesa,80.00
+2026-01-10,Costco,Mercado,Receita,380.98
+2025-12-15,Costco,Mercado,Despesa,10.75
+2026-01-13,Cab,Transporte,Receita,30.00
+2025-12-19,Cab,Transporte,Despesa,120.50
+2026-01-06,Walmart,Alimentação,Despesa,186.67
+2026-01-10,Costco,Mercado,Receita,595.00
+
