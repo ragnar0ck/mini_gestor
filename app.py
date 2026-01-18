@@ -7,7 +7,19 @@ st.title("Mini Gestor Financeiro Familiar")
 with st.form("form_gasto"):
     data = st.date_input("Data")
     descricao = st.text_input("Descrição")
-    categoria = st.text_input("Categoria")
+    CATEGORIAS_PADRAO = [
+        "Mercado",
+        "Alimentação",
+        "Moradia",
+        "Transporte",
+        "Lazer",
+        "Saúde",
+        "Educação",
+        "Outros"
+    ]
+    categoria = st.selectbox("Categoria", CATEGORIAS_PADRAO)
+    if categoria == "Outros":
+        categoria = st.text_input("Digite a categoria")
     tipo = st.selectbox("Tipo", ["Débito", "Crédito", "Dinheiro"])
     valor = st.number_input("Valor", min_value=0.0, format="%.2f")
     submitted = st.form_submit_button("Adicionar gasto")
