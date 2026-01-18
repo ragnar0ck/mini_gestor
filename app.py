@@ -1,59 +1,80 @@
 import streamlit as st
 from utils import adicionar_gasto, ler_gastos, resumo_mes_atual
 
+st.set_page_config(page_title="Mini Gestor Financeiro Familiar", layout="centered")
+
 st.title("Mini Gestor Financeiro Familiar")
 
-# ===== FORMULÁRIO =====
+# =============================
+# CATEGORIAS (FORA DO FORM)
+# =============================
+CATEGORIAS_PADRAO = [
+    "Mercado",
+    "Alimentação",
+    "Moradia",
+    "Transporte",
+    "Lazer",
+    "Saúde",
+    "Educação",
+    "Outros"
+]
+
+st.subheader("Novo gasto")
+
+categoria_selecionada = st.selectbox(
+    "Categoria",
+    CATEGORIAS_PADRAO
+)
+
+if categoria_selecionada == "Outros":
+    categoria_final = st.text_input("Digite a categoria")
+else:
+    categoria_final = categoria_selecionada
+
+st.divider()
+
+# =============================
+# FORMULÁRIO (ENVIO)
+# =============================
 with st.form("form_gasto"):
     data = st.date_input("Data")
     descricao = st.text_input("Descrição")
-    CATEGORIAS_PADRAO = [
-        "Mercado",
-        "Alimentação",
-        "Moradia",
-        "Transporte",
-        "Lazer",
-        "Saúde",
-        "Educação",
-        "Outros"
-    ]
-    categoria_selecionada = st.selectbox(
-        "Categoria",
-        CATEGORIAS_PADRAO,
-        key="categoria_select"
-    )
-
-    categoria_final = categoria_selecionada
-
-    if categoria_selecionada == "Outros":
-        categoria_final = st.text_input(
-            "Digite a categoria",
-            key="categoria_custom"
-        )
-
-    tipo = st.selectbox("Tipo", ["Débito", "Crédito", "Dinheiro"])
+    tipo = st.selectbox("Tipo de pagamento", ["Débito", "Crédito", "Dinheiro"])
     valor = st.number_input("Valor", min_value=0.0, format="%.2f")
+
     submitted = st.form_submit_button("Adicionar gasto")
 
     if submitted:
-        adicionar_gasto(data, descricao, categoria_final, tipo, valor)
-        st.success("Gasto adicionado!")
+        if not categoria_final:
+            st.warning("Informe a categoria do gasto.")
+        else:
+            adicionar_gasto(data, descricao, categoria_final, tipo, valor)
+            st.success("Gasto adicionado com sucesso!")
 
-# ===== RESUMO =====
+# =============================
+# RESUMO MENSAL
+# =============================
 st.divider()
 st.subheader("Resumo do mês")
 
 total_mes, gastos_categoria = resumo_mes_atual()
-
 st.metric("Total gasto no mês", f"R$ {total_mes:.2f}")
 
 if not gastos_categoria.empty:
     st.bar_chart(
         gastos_categoria.set_index("categoria")
     )
+else:
+    st.info("Nenhum gasto registrado neste mês.")
 
-# ===== LISTA DE GASTOS =====
+# =============================
+# LISTA DE GASTOS
+# =============================
 st.divider()
 st.subheader("Gastos registrados")
+
 df = ler_gastos()
-st.dataframe(df)
+if df.empty:
+    st.info("Nenhum gasto registrado ainda.")
+else:
+    st.dataframe(df)
