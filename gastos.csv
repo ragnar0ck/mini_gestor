@@ -14,5 +14,279 @@ data,descricao,categoria,tipo,valor
 2025-12-28,Cab,Transporte,Despesa,90.00
 2026-01-08,Walmart,Alimentação,Despesa,120.00
 2026-01-12,Costco,Mercado,Receita,250.00
+data,descricao,categoria,tipo,valor
+2025-01-07,No Frills,Mercado,Dinheiro,342.41
+2025-01-11,Costco,Mercado,Débito,176.54
+2025-01-19,No Frills,Mercado,Débito,334.36
+2025-01-22,McDonald's,Alimentação,Débito,365.26
+2025-01-18,Burguer King,Alimentação,Débito,309.57
+2025-01-13,WoChang,Alimentação,Débito,171.05
+2025-01-11,Telefone,Moradia,Crédito,1862.8
+2025-01-16,Telefone,Moradia,Débito,997.45
+2025-01-26,Telefone,Moradia,Débito,1063.31
+2025-01-04,WhiteCab,Transporte,Crédito,263.5
+2025-01-24,WhiteCab,Transporte,Crédito,51.71
+2025-01-23,Manutenção Carro,Transporte,Débito,467.48
+2025-01-22,Viagem Fim de Semana,Lazer,Débito,422.82
+2025-01-24,Show,Lazer,Dinheiro,56.73
+2025-01-05,Cinema,Lazer,Dinheiro,455.26
+2025-01-09,Dentista,Saúde,Crédito,130.1
+2025-01-05,Consulta Médica,Saúde,Débito,428.81
+2025-01-03,Dentista,Saúde,Débito,271.59
+2025-01-18,Curso Python,Educação,Débito,379.69
+2025-01-13,Livros,Educação,Dinheiro,498.01
+2025-01-07,Livros,Educação,Crédito,418.32
+2025-02-06,No Frills,Mercado,Crédito,329.09
+2025-02-28,Superstore,Mercado,Crédito,447.94
+2025-02-09,No Frills,Mercado,Débito,222.06
+2025-02-20,WoChang,Alimentação,Débito,23.03
+2025-02-28,McDonald's,Alimentação,Crédito,462.39
+2025-02-26,McDonald's,Alimentação,Crédito,26.76
+2025-02-22,Rogers,Moradia,Débito,813.9
+2025-02-16,Rogers,Moradia,Crédito,2025.47
+2025-02-11,Rogers,Moradia,Dinheiro,1627.45
+2025-02-28,Manutenção Carro,Transporte,Crédito,313.62
+2025-02-14,Manutenção Carro,Transporte,Débito,25.25
+2025-02-06,WhiteCab,Transporte,Débito,346.61
+2025-02-26,Show,Lazer,Dinheiro,335.52
+2025-02-03,Viagem Fim de Semana,Lazer,Débito,328.14
+2025-02-09,Netflix,Lazer,Dinheiro,217.91
+2025-02-25,Dentista,Saúde,Crédito,217.99
+2025-02-13,Dentista,Saúde,Crédito,329.36
+2025-02-28,Consulta Médica,Saúde,Crédito,70.55
+2025-02-23,ChatGPT Plus,Educação,Débito,255.3
+2025-02-03,ChatGPT Plus,Educação,Débito,467.52
+2025-02-01,Livros,Educação,Dinheiro,322.24
+2025-03-02,No Frills,Mercado,Débito,304.55
+2025-03-06,No Frills,Mercado,Débito,77.49
+2025-03-25,Walmart,Mercado,Crédito,63.69
+2025-03-26,Burguer King,Alimentação,Dinheiro,482.78
+2025-03-25,Burguer King,Alimentação,Crédito,245.6
+2025-03-25,WoChang,Alimentação,Crédito,359.74
+2025-03-09,Rogers,Moradia,Crédito,1640.7
+2025-03-15,Rogers,Moradia,Dinheiro,1671.79
+2025-03-21,Telefone,Moradia,Débito,991.32
+2025-03-08,WhiteCab,Transporte,Crédito,391.79
+2025-03-08,WhiteCab,Transporte,Dinheiro,479.55
+2025-03-01,WhiteCab,Transporte,Débito,177.67
+2025-03-16,Viagem Fim de Semana,Lazer,Crédito,132.96
+2025-03-22,Viagem Fim de Semana,Lazer,Dinheiro,320.3
+2025-03-14,Viagem Fim de Semana,Lazer,Dinheiro,488.44
+2025-03-25,Consulta Médica,Saúde,Dinheiro,334.6
+2025-03-11,Consulta Médica,Saúde,Crédito,152.87
+2025-03-09,Exame,Saúde,Dinheiro,261.7
+2025-03-26,Curso Python,Educação,Crédito,422.57
+2025-03-03,Curso Python,Educação,Dinheiro,363.69
+2025-03-12,Livros,Educação,Dinheiro,118.77
+2025-04-05,Superstore,Mercado,Crédito,185.23
+2025-04-18,Superstore,Mercado,Crédito,60.51
+2025-04-06,Superstore,Mercado,Crédito,264.72
+2025-04-24,Burguer King,Alimentação,Débito,245.71
+2025-04-26,WoChang,Alimentação,Dinheiro,344.56
+2025-04-25,McDonald's,Alimentação,Crédito,401.88
+2025-04-07,Rogers,Moradia,Dinheiro,1187.28
+2025-04-08,Telefone,Moradia,Dinheiro,2093.06
+2025-04-13,Telefone,Moradia,Débito,2244.3
+2025-04-11,AirCab,Transporte,Débito,31.23
+2025-04-13,AirCab,Transporte,Crédito,410.93
+2025-04-21,WhiteCab,Transporte,Crédito,255.27
+2025-04-01,Viagem Fim de Semana,Lazer,Dinheiro,44.64
+2025-04-22,Viagem Fim de Semana,Lazer,Crédito,21.01
+2025-04-06,Netflix,Lazer,Débito,395.01
+2025-04-14,Dentista,Saúde,Crédito,388.63
+2025-04-06,Consulta Médica,Saúde,Débito,494.53
+2025-04-26,Consulta Médica,Saúde,Débito,45.39
+2025-04-01,ChatGPT Plus,Educação,Dinheiro,313.36
+2025-04-02,Livros,Educação,Crédito,165.2
+2025-04-20,Livros,Educação,Débito,278.95
+2025-05-06,No Frills,Mercado,Crédito,265.68
+2025-05-07,No Frills,Mercado,Crédito,169.63
+2025-05-08,No Frills,Mercado,Dinheiro,331.92
+2025-05-11,McDonald's,Alimentação,Crédito,283.65
+2025-05-06,WoChang,Alimentação,Crédito,73.57
+2025-05-03,St. Louis,Alimentação,Dinheiro,163.95
+2025-05-01,Aluguel,Moradia,Débito,2101.75
+2025-05-28,Aluguel,Moradia,Dinheiro,1871.73
+2025-05-07,Telefone,Moradia,Dinheiro,1021.49
+2025-05-15,WhiteCab,Transporte,Dinheiro,153.88
+2025-05-01,Manutenção Carro,Transporte,Débito,363.59
+2025-05-13,AirCab,Transporte,Crédito,88.84
+2025-05-08,Viagem Fim de Semana,Lazer,Dinheiro,304.98
+2025-05-16,Netflix,Lazer,Crédito,376.11
+2025-05-25,Viagem Fim de Semana,Lazer,Dinheiro,140.74
+2025-05-18,Dentista,Saúde,Crédito,138.97
+2025-05-25,Exame,Saúde,Dinheiro,281.31
+2025-05-24,Exame,Saúde,Crédito,293.35
+2025-05-19,ChatGPT Plus,Educação,Dinheiro,41.52
+2025-05-25,Livros,Educação,Crédito,286.17
+2025-05-19,Curso Python,Educação,Dinheiro,303.53
+2025-06-18,Walmart,Mercado,Crédito,200.31
+2025-06-02,No Frills,Mercado,Débito,389.12
+2025-06-24,Costco,Mercado,Dinheiro,97.07
+2025-06-17,Burguer King,Alimentação,Crédito,424.63
+2025-06-17,Burguer King,Alimentação,Débito,381.21
+2025-06-18,St. Louis,Alimentação,Crédito,357.15
+2025-06-05,Rogers,Moradia,Crédito,2353.85
+2025-06-13,Telefone,Moradia,Dinheiro,2338.14
+2025-06-02,Telefone,Moradia,Dinheiro,1132.83
+2025-06-21,WhiteCab,Transporte,Crédito,370.21
+2025-06-06,WhiteCab,Transporte,Débito,374.59
+2025-06-27,WhiteCab,Transporte,Débito,442.27
+2025-06-27,Cinema,Lazer,Crédito,101.25
+2025-06-01,Show,Lazer,Débito,456.9
+2025-06-19,Netflix,Lazer,Débito,179.26
+2025-06-04,Dentista,Saúde,Débito,368.93
+2025-06-13,Dentista,Saúde,Crédito,89.79
+2025-06-28,Consulta Médica,Saúde,Dinheiro,418.13
+2025-06-21,Curso Python,Educação,Crédito,237.11
+2025-06-24,Curso Python,Educação,Débito,404.38
+2025-06-11,ChatGPT Plus,Educação,Crédito,227.46
+2025-07-13,Costco,Mercado,Débito,29.05
+2025-07-25,Superstore,Mercado,Crédito,198.95
+2025-07-08,Costco,Mercado,Crédito,346.19
+2025-07-04,Burguer King,Alimentação,Débito,50.57
+2025-07-14,WoChang,Alimentação,Crédito,253.38
+2025-07-01,McDonald's,Alimentação,Dinheiro,132.55
+2025-07-16,Telefone,Moradia,Dinheiro,1516.2
+2025-07-04,Rogers,Moradia,Débito,1354.4
+2025-07-13,Telefone,Moradia,Dinheiro,2048.46
+2025-07-27,AirCab,Transporte,Débito,455.53
+2025-07-24,AirCab,Transporte,Crédito,215.39
+2025-07-22,WhiteCab,Transporte,Dinheiro,227.79
+2025-07-13,Viagem Fim de Semana,Lazer,Dinheiro,336.57
+2025-07-09,Viagem Fim de Semana,Lazer,Débito,489.79
+2025-07-26,Netflix,Lazer,Crédito,494.17
+2025-07-13,Dentista,Saúde,Débito,475.47
+2025-07-17,Consulta Médica,Saúde,Crédito,156.29
+2025-07-15,Dentista,Saúde,Dinheiro,57.07
+2025-07-21,Livros,Educação,Débito,147.04
+2025-07-22,ChatGPT Plus,Educação,Débito,287.0
+2025-07-25,ChatGPT Plus,Educação,Dinheiro,194.17
+2025-08-28,Costco,Mercado,Débito,368.66
+2025-08-19,No Frills,Mercado,Crédito,413.81
+2025-08-13,No Frills,Mercado,Crédito,30.11
+2025-08-03,Burguer King,Alimentação,Dinheiro,218.12
+2025-08-02,St. Louis,Alimentação,Débito,438.07
+2025-08-19,St. Louis,Alimentação,Dinheiro,234.66
+2025-08-08,Aluguel,Moradia,Dinheiro,1003.08
+2025-08-02,Rogers,Moradia,Crédito,2307.2
+2025-08-22,Aluguel,Moradia,Dinheiro,1385.88
+2025-08-23,Manutenção Carro,Transporte,Dinheiro,202.9
+2025-08-19,AirCab,Transporte,Crédito,197.98
+2025-08-24,Manutenção Carro,Transporte,Crédito,426.96
+2025-08-01,Show,Lazer,Débito,408.77
+2025-08-15,Viagem Fim de Semana,Lazer,Débito,431.27
+2025-08-16,Show,Lazer,Dinheiro,131.69
+2025-08-18,Exame,Saúde,Dinheiro,340.24
+2025-08-25,Exame,Saúde,Dinheiro,350.24
+2025-08-12,Dentista,Saúde,Dinheiro,461.31
+2025-08-09,Curso Python,Educação,Débito,100.6
+2025-08-20,Curso Python,Educação,Dinheiro,232.29
+2025-08-19,Livros,Educação,Crédito,205.24
+2025-09-08,Superstore,Mercado,Crédito,116.04
+2025-09-25,Superstore,Mercado,Débito,139.49
+2025-09-28,Costco,Mercado,Crédito,474.93
+2025-09-11,WoChang,Alimentação,Dinheiro,401.05
+2025-09-07,WoChang,Alimentação,Dinheiro,228.03
+2025-09-26,St. Louis,Alimentação,Dinheiro,103.41
+2025-09-24,Telefone,Moradia,Dinheiro,1964.6
+2025-09-04,Telefone,Moradia,Débito,2138.23
+2025-09-18,Rogers,Moradia,Crédito,2469.52
+2025-09-01,Manutenção Carro,Transporte,Crédito,280.89
+2025-09-14,AirCab,Transporte,Débito,269.69
+2025-09-15,AirCab,Transporte,Débito,131.97
+2025-09-13,Netflix,Lazer,Crédito,480.65
+2025-09-17,Show,Lazer,Débito,178.33
+2025-09-01,Netflix,Lazer,Débito,381.7
+2025-09-24,Consulta Médica,Saúde,Dinheiro,69.05
+2025-09-11,Exame,Saúde,Crédito,82.36
+2025-09-06,Consulta Médica,Saúde,Dinheiro,272.3
+2025-09-22,ChatGPT Plus,Educação,Dinheiro,236.96
+2025-09-04,Livros,Educação,Dinheiro,261.75
+2025-09-28,Curso Python,Educação,Débito,63.52
+2025-10-08,Costco,Mercado,Dinheiro,98.03
+2025-10-17,Costco,Mercado,Dinheiro,254.13
+2025-10-15,Superstore,Mercado,Dinheiro,269.04
+2025-10-16,St. Louis,Alimentação,Crédito,394.35
+2025-10-11,Burguer King,Alimentação,Débito,54.62
+2025-10-03,WoChang,Alimentação,Débito,142.18
+2025-10-02,Aluguel,Moradia,Débito,2421.55
+2025-10-18,Aluguel,Moradia,Dinheiro,2344.32
+2025-10-13,Telefone,Moradia,Débito,1476.0
+2025-10-04,WhiteCab,Transporte,Crédito,455.46
+2025-10-20,Manutenção Carro,Transporte,Dinheiro,438.87
+2025-10-02,AirCab,Transporte,Dinheiro,391.76
+2025-10-03,Cinema,Lazer,Dinheiro,377.64
+2025-10-11,Show,Lazer,Dinheiro,97.78
+2025-10-23,Cinema,Lazer,Dinheiro,229.55
+2025-10-27,Exame,Saúde,Dinheiro,423.08
+2025-10-13,Exame,Saúde,Dinheiro,150.68
+2025-10-27,Exame,Saúde,Crédito,426.93
+2025-10-02,Livros,Educação,Dinheiro,42.39
+2025-10-10,Curso Python,Educação,Crédito,367.38
+2025-10-10,ChatGPT Plus,Educação,Dinheiro,135.32
+2025-11-12,Walmart,Mercado,Crédito,225.02
+2025-11-26,Walmart,Mercado,Dinheiro,351.29
+2025-11-15,Walmart,Mercado,Débito,262.93
+2025-11-28,WoChang,Alimentação,Dinheiro,55.78
+2025-11-16,Burguer King,Alimentação,Crédito,449.61
+2025-11-28,McDonald's,Alimentação,Dinheiro,289.74
+2025-11-12,Telefone,Moradia,Crédito,1211.27
+2025-11-15,Telefone,Moradia,Crédito,2145.07
+2025-11-08,Rogers,Moradia,Dinheiro,2231.4
+2025-11-11,Manutenção Carro,Transporte,Dinheiro,150.07
+2025-11-07,WhiteCab,Transporte,Crédito,243.45
+2025-11-03,WhiteCab,Transporte,Dinheiro,358.64
+2025-11-26,Cinema,Lazer,Crédito,483.39
+2025-11-06,Show,Lazer,Dinheiro,319.81
+2025-11-19,Netflix,Lazer,Dinheiro,364.56
+2025-11-01,Exame,Saúde,Crédito,127.75
+2025-11-15,Consulta Médica,Saúde,Crédito,164.52
+2025-11-01,Exame,Saúde,Débito,378.47
+2025-11-23,Livros,Educação,Dinheiro,167.02
+2025-11-27,Curso Python,Educação,Crédito,424.48
+2025-11-27,Livros,Educação,Crédito,436.91
+2025-12-19,No Frills,Mercado,Crédito,425.84
+2025-12-21,Superstore,Mercado,Débito,372.07
+2025-12-19,Walmart,Mercado,Débito,162.43
+2025-12-25,St. Louis,Alimentação,Dinheiro,332.64
+2025-12-07,WoChang,Alimentação,Dinheiro,466.98
+2025-12-18,McDonald's,Alimentação,Débito,459.27
+2025-12-18,Aluguel,Moradia,Crédito,2433.73
+2025-12-24,Telefone,Moradia,Crédito,925.64
+2025-12-17,Aluguel,Moradia,Débito,1619.32
+2025-12-28,WhiteCab,Transporte,Débito,299.61
+2025-12-09,Manutenção Carro,Transporte,Crédito,205.34
+2025-12-09,AirCab,Transporte,Crédito,353.24
+2025-12-18,Cinema,Lazer,Dinheiro,299.36
+2025-12-14,Show,Lazer,Crédito,375.53
+2025-12-26,Viagem Fim de Semana,Lazer,Dinheiro,344.65
+2025-12-05,Exame,Saúde,Crédito,130.57
+2025-12-26,Exame,Saúde,Dinheiro,142.06
+2025-12-02,Consulta Médica,Saúde,Dinheiro,148.76
+2025-12-23,ChatGPT Plus,Educação,Débito,48.45
+2025-12-03,ChatGPT Plus,Educação,Crédito,168.3
+2025-12-22,Curso Python,Educação,Dinheiro,228.4
+2026-01-18,Costco,Mercado,Dinheiro,273.77
+2026-01-16,No Frills,Mercado,Crédito,169.62
+2026-01-18,Costco,Mercado,Dinheiro,430.7
+2026-01-18,Burguer King,Alimentação,Dinheiro,180.43
+2026-01-01,Burguer King,Alimentação,Crédito,33.1
+2026-01-02,Burguer King,Alimentação,Débito,333.11
+2026-01-18,Telefone,Moradia,Crédito,1451.38
+2026-01-10,Telefone,Moradia,Dinheiro,1954.37
+2026-01-18,Aluguel,Moradia,Débito,2493.41
+2026-01-18,Manutenção Carro,Transporte,Débito,134.28
+2026-01-18,AirCab,Transporte,Crédito,321.45
+2026-01-02,WhiteCab,Transporte,Débito,453.85
+2026-01-05,Cinema,Lazer,Débito,317.26
+2026-01-12,Show,Lazer,Crédito,355.29
+2026-01-16,Show,Lazer,Dinheiro,405.07
+2026-01-18,Dentista,Saúde,Dinheiro,319.1
+2026-01-12,Exame,Saúde,Débito,198.89
+2026-01-08,Exame,Saúde,Débito,209.07
+2026-01-02,Livros,Educação,Dinheiro,262.15
+2026-01-18,ChatGPT Plus,Educação,Crédito,46.89
+2026-01-05,ChatGPT Plus,Educação,Crédito,145.92
 
 
