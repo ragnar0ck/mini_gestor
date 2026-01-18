@@ -17,15 +17,26 @@ with st.form("form_gasto"):
         "Educação",
         "Outros"
     ]
-    categoria = st.selectbox("Categoria", CATEGORIAS_PADRAO)
-    if categoria == "Outros":
-        categoria = st.text_input("Digite a categoria")
+    categoria_selecionada = st.selectbox(
+        "Categoria",
+        CATEGORIAS_PADRAO,
+        key="categoria_select"
+    )
+
+    categoria_final = categoria_selecionada
+
+    if categoria_selecionada == "Outros":
+        categoria_final = st.text_input(
+            "Digite a categoria",
+            key="categoria_custom"
+        )
+
     tipo = st.selectbox("Tipo", ["Débito", "Crédito", "Dinheiro"])
     valor = st.number_input("Valor", min_value=0.0, format="%.2f")
     submitted = st.form_submit_button("Adicionar gasto")
 
     if submitted:
-        adicionar_gasto(data, descricao, categoria, tipo, valor)
+        adicionar_gasto(data, descricao, categoria_final, tipo, valor)
         st.success("Gasto adicionado!")
 
 # ===== RESUMO =====
