@@ -4,7 +4,8 @@ from utils import (
     ler_gastos,
     listar_meses_disponiveis,
     resumo_por_mes,
-    gastos_por_categoria_mes
+    gastos_por_categoria_mes,
+    total_por_mes
 )
 # =============================
 
@@ -115,6 +116,27 @@ else:
     )
 
     st.line_chart(df_linhas)
+
+# =============================
+# EVOLUÇÃO DE GASTOS
+# =============================
+st.divider()
+st.subheader("Evolução de gastos")
+
+qtd_meses = st.slider(
+    "Selecione quantos meses deseja comparar",
+    min_value=2,
+    max_value=12,
+    value=6
+)
+
+df_evolucao = total_por_mes(qtd_meses)
+
+if df_evolucao.empty:
+    st.info("Ainda não há dados suficientes.")
+else:
+    st.line_chart(df_evolucao)
+
 
 # =============================
 # LISTA DE GASTOS

@@ -81,6 +81,25 @@ def gastos_por_categoria_mes(mes_ano):
         .reset_index()
     )
 
+def total_por_mes(ultimos_meses=12):
+    df = pd.read_csv(CSV_FILE)
+    if df.empty:
+        return pd.DataFrame()
+
+    df["data"] = pd.to_datetime(df["data"])
+    df["mes"] = df["data"].dt.to_period("M").astype(str)
+
+    resumo = (
+        df.groupby("mes")["valor"]
+        .sum()
+        .reset_index()
+        .sort_values("mes")
+        .tail(ultimos_meses)
+        .set_index("mes")
+    )
+
+    return resumo
+
     df = pd.read_csv(CSV_FILE)
     if df.empty:
         return 0, pd.DataFrame()
