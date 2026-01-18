@@ -39,6 +39,32 @@ def resumo_por_mes(mes_ano):
 
     return total, por_categoria
 
+def comparar_meses(mes_base, mes_comparacao):
+    df = pd.read_csv(CSV_FILE)
+    if df.empty:
+        return pd.DataFrame()
+
+    df["data"] = pd.to_datetime(df["data"])
+    df["mes_ano"] = df["data"].dt.to_period("M").astype(str)
+
+    df_filtrado = df[df["mes_ano"].isin([mes_base, mes_comparacao])]
+
+    comparacao = (
+        df_filtrado
+        .groupby(["mes_ano", "categoria"])["valor"]
+        .sum()
+        .reset_index()
+        .pivot(index="categoria", columns="mes_ano", values="valor")
+        .fillna(0)
+    )
+
+    comparacao["Diferença"] = (
+        comparacao[mes_comparacao] - comparacao[mes_base]
+    )
+
+    return comparacao.reset_index()
+
+
     df = pd.read_csv(CSV_FILE)
     if df.empty:
         return 0, pd.DataFrame()

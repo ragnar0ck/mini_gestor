@@ -1,5 +1,12 @@
 import streamlit as st
-from utils import adicionar_gasto, ler_gastos, listar_meses_disponiveis, resumo_por_mes
+from utils import (
+    adicionar_gasto,
+    ler_gastos,
+    listar_meses_disponiveis,
+    resumo_por_mes,
+    comparar_meses
+)
+# =============================
 
 st.set_page_config(page_title="Mini Gestor Financeiro Familiar", layout="centered")
 
@@ -74,6 +81,44 @@ else:
     if not gastos_categoria.empty:
         st.bar_chart(
             gastos_categoria.set_index("categoria")
+        )
+
+
+# =============================
+# COMPARAÇÃO ENTRE MESES
+# =============================
+
+st.divider()
+st.subheader("Comparação entre meses")
+
+meses_disponiveis = listar_meses_disponiveis()
+
+if len(meses_disponiveis) < 2:
+    st.info("É necessário ter pelo menos dois meses para comparar.")
+else:
+    col1, col2 = st.columns(2)
+
+    with col1:
+        mes_base = st.selectbox(
+            "Mês base",
+            meses_disponiveis,
+            index=1
+        )
+
+    with col2:
+        mes_comparacao = st.selectbox(
+            "Mês de comparação",
+            meses_disponiveis,
+            index=0
+        )
+
+    if mes_base != mes_comparacao:
+        df_comparacao = comparar_meses(mes_base, mes_comparacao)
+
+        st.dataframe(df_comparacao)
+
+        st.bar_chart(
+            df_comparacao.set_index("categoria")[["Diferença"]]
         )
 
 # =============================
