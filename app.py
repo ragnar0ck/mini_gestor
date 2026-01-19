@@ -85,6 +85,20 @@ else:
             gastos_categoria.set_index("categoria")
         )
 
+# =============================
+# INSIGHTS AUTOMÁTICOS
+# =============================
+st.divider()
+st.subheader("Insights automáticos")
+
+insights = gerar_insights()
+
+if not insights:
+    st.info("Ainda não há dados suficientes para gerar insights.")
+else:
+    for insight in insights:
+        st.write(insight)
+
 
 # =============================
 # COMPARAÇÃO ENTRE MESES
@@ -151,16 +165,3 @@ if df.empty:
 else:
     st.dataframe(df)
 
-# =============================
-# INSIGHTS AUTOMÁTICOS
-# =============================
-st.divider()
-st.subheader("Insights automáticos")
-
-insights = gerar_insights()
-
-if not insights:
-    st.info("Ainda não há dados suficientes para gerar insights.")
-else:
-    for insight in insights:
-        st.write(insight)
