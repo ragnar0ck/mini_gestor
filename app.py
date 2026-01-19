@@ -7,7 +7,9 @@ from utils import (
     gastos_por_categoria_mes,
     total_por_mes,
     gerar_insights,
-    gerar_alertas
+    gerar_alertas,
+    salvar_teto,
+    verificar_teto
 )
 # =============================
 
@@ -114,6 +116,35 @@ else:
     for alerta in alertas:
         st.warning(alerta)
 
+
+# =============================
+# TETO MENSAL
+# =============================
+
+st.divider()
+st.subheader("Teto mensal")
+
+teto_atual = ler_teto()
+
+novo_teto = st.number_input(
+    "Defina seu teto mensal de gastos",
+    min_value=0.0,
+    format="%.2f",
+    value=float(teto_atual)
+)
+
+if st.button("Salvar teto"):
+    salvar_teto(novo_teto)
+    st.success("Teto mensal atualizado!")
+
+# =============================
+# ALERTA DE TETO ULTRAPASSADO
+# =============================
+
+alerta_teto = verificar_teto()
+
+if alerta_teto:
+    st.error(alerta_teto)
 
 # =============================
 # COMPARAÇÃO ENTRE MESES
