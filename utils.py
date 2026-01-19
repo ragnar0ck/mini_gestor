@@ -1,5 +1,8 @@
 import pandas as pd
+import json
+import os
 
+CONFIG_FILE = "config.json"
 CSV_FILE = "gastos.csv"
 
 def adicionar_gasto(data, descricao, categoria, tipo, valor):
@@ -225,7 +228,51 @@ def gerar_alertas():
 
     return alertas
 
+# =============================
+# GERENCIAR TETO MENSAL
+# =============================
+def ler_teto():
+    if not os.path.exists(CONFIG_FILE):
+        return 0
 
+    with open(CONFIG_FILE, "r") as f:
+        data = json.load(f)
+
+    return data.get("teto_mensal", 0)
+
+
+def salvar_teto(valor):
+    with open(CONFIG_FILE, "w") as f:
+        json.dump({"teto_mensal": valor}, f)
+
+def verificar_teto():
+    teto = ler_teto()
+    if teto <= 0:
+        return None
+
+    df = pd.read_csv(CSV_FILE)
+    if df.empty:
+        return None
+
+    df["data"] = pd.to_datetime(df["data"])
+    df["mes"] = df["data"].dt.to_period("M").astype(str)
+
+    mes_atual = df["mes"].max()
+    gasto_atual = df[df["mes"] == mes_atual]["valor"].sum()
+
+    percentual = gasto_atual / teto
+
+    if percentual >= 1:
+        return f"🚨 Você **ultrapassou** o teto mensal! (R$ {gasto_atual:.2f} / R$ {teto:.2f})"
+    elif percentual >= 0.9:
+        return f"⚠️ Atenção: você já usou **90% do teto mensal**."
+    elif percentual >= 0.7:
+        return f"👀 Você já usou **70% do teto mensal**."
+
+    return None
+
+
+'''
     df = pd.read_csv(CSV_FILE)
     if df.empty:
         return 0, pd.DataFrame()
@@ -243,3 +290,4 @@ def gerar_alertas():
     por_categoria = df_mes.groupby("categoria")["valor"].sum().reset_index()
 
     return total, por_categoria
+'''

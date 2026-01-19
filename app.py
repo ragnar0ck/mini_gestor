@@ -9,6 +9,7 @@ from utils import (
     gerar_insights,
     gerar_alertas,
     salvar_teto,
+    ler_teto,
     verificar_teto
 )
 # =============================
