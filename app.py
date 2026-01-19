@@ -5,7 +5,8 @@ from utils import (
     listar_meses_disponiveis,
     resumo_por_mes,
     gastos_por_categoria_mes,
-    total_por_mes
+    total_por_mes,
+    gerar_insights
 )
 # =============================
 
@@ -149,3 +150,17 @@ if df.empty:
     st.info("Nenhum gasto registrado ainda.")
 else:
     st.dataframe(df)
+
+# =============================
+# INSIGHTS AUTOMÁTICOS
+# =============================
+st.divider()
+st.subheader("Insights automáticos")
+
+insights = gerar_insights()
+
+if not insights:
+    st.info("Ainda não há dados suficientes para gerar insights.")
+else:
+    for insight in insights:
+        st.write(insight)

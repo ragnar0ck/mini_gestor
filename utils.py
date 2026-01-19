@@ -100,6 +100,68 @@ def total_por_mes(ultimos_meses=12):
 
     return resumo
 
+def gerar_insights():
+    df = pd.read_csv(CSV_FILE)
+    if df.empty:
+        return []
+
+    df["data"] = pd.to_datetime(df["data"])
+    df["mes"] = df["data"].dt.to_period("M").astype(str)
+
+    resumo_mes = (
+        df.groupby("mes")["valor"]
+        .sum()
+        .reset_index()
+        .sort_values("mes")
+    )
+
+    insights = []
+
+    # Insight 1 - tendência
+    if len(resumo_mes) >= 3:
+        ultimos = resumo_mes.tail(3)["valor"]
+        if ultimos.is_monotonic_increasing:
+            insights.append("📈 Seus gastos estão aumentando nos últimos meses.")
+        elif ultimos.is_monotonic_decreasing:
+            insights.append("📉 Seus gastos estão diminuindo nos últimos meses.")
+        else:
+            insights.append("➖ Seus gastos estão relativamente estáveis.")
+
+    # Insight 2 - comparação mês atual x anterior
+    if len(resumo_mes) >= 2:
+        atual = resumo_mes.iloc[-1]["valor"]
+        anterior = resumo_mes.iloc[-2]["valor"]
+
+        if anterior > 0:
+            variacao = ((atual - anterior) / anterior) * 100
+            if variacao > 0:
+                insights.append(f"⚠️ Você gastou {variacao:.1f}% a mais que no mês anterior.")
+            else:
+                insights.append(f"✅ Você gastou {abs(variacao):.1f}% a menos que no mês anterior.")
+
+    # Insight 3 - categoria com maior gasto no mês atual
+    mes_atual = resumo_mes.iloc[-1]["mes"]
+    df_mes_atual = df[df["mes"] == mes_atual]
+
+    top_categoria = (
+        df_mes_atual
+        .groupby("categoria")["valor"]
+        .sum()
+        .idxmax()
+    )
+
+    insights.append(f"💸 A categoria que mais pesou este mês foi **{top_categoria}**.")
+
+    # Insight 4 - acima da média
+    media = resumo_mes["valor"].mean()
+    atual = resumo_mes.iloc[-1]["valor"]
+
+    if atual > media * 1.1:
+        insights.append("🚨 Seus gastos deste mês estão bem acima da média.")
+
+    return insights
+
+
     df = pd.read_csv(CSV_FILE)
     if df.empty:
         return 0, pd.DataFrame()
