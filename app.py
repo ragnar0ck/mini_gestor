@@ -6,7 +6,8 @@ from utils import (
     resumo_por_mes,
     gastos_por_categoria_mes,
     total_por_mes,
-    gerar_insights
+    gerar_insights,
+    gerar_alertas
 )
 # =============================
 
@@ -98,6 +99,20 @@ if not insights:
 else:
     for insight in insights:
         st.write(insight)
+
+# =============================
+# ALERTAS AUTOMÁTICOS
+# =============================
+st.divider()
+st.subheader("Alertas")
+
+alertas = gerar_alertas()
+
+if not alertas:
+    st.success("Tudo sob controle este mês 👍")
+else:
+    for alerta in alertas:
+        st.warning(alerta)
 
 
 # =============================

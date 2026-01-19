@@ -161,6 +161,70 @@ def gerar_insights():
 
     return insights
 
+# =============================
+# GERAR ALERTAS AUTOMÁTICOS
+# =============================
+def gerar_alertas():
+    df = pd.read_csv(CSV_FILE)
+    if df.empty:
+        return []
+
+    df["data"] = pd.to_datetime(df["data"])
+    df["mes"] = df["data"].dt.to_period("M").astype(str)
+
+    alertas = []
+
+    resumo_mes = (
+        df.groupby("mes")["valor"]
+        .sum()
+        .reset_index()
+        .sort_values("mes")
+    )
+
+    if len(resumo_mes) < 2:
+        return alertas
+
+    mes_atual = resumo_mes.iloc[-1]
+    mes_anterior = resumo_mes.iloc[-2]
+
+    # 🔔 ALERTA 1 — acima da média
+    media = resumo_mes["valor"].mean()
+    if mes_atual["valor"] > media * 1.2:
+        alertas.append(
+            "🚨 Atenção: seus gastos deste mês estão **bem acima da média histórica**."
+        )
+
+    # 🔔 ALERTA 2 — crescimento brusco
+    if mes_anterior["valor"] > 0:
+        variacao = ((mes_atual["valor"] - mes_anterior["valor"]) / mes_anterior["valor"]) * 100
+        if variacao > 20:
+            alertas.append(
+                f"📈 Seus gastos aumentaram **{variacao:.1f}%** em relação ao mês passado."
+            )
+
+    # 🔔 ALERTA 3 — categoria fora do padrão
+    df_cat = (
+        df.groupby(["mes", "categoria"])["valor"]
+        .sum()
+        .reset_index()
+    )
+
+    atual_cat = df_cat[df_cat["mes"] == mes_atual["mes"]]
+
+    medias_cat = (
+        df_cat.groupby("categoria")["valor"]
+        .mean()
+    )
+
+    for _, row in atual_cat.iterrows():
+        media_categoria = medias_cat.get(row["categoria"], 0)
+        if media_categoria > 0 and row["valor"] > media_categoria * 1.5:
+            alertas.append(
+                f"💣 Gasto elevado em **{row['categoria']}** este mês."
+            )
+
+    return alertas
+
 
     df = pd.read_csv(CSV_FILE)
     if df.empty:
