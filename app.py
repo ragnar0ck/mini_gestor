@@ -10,7 +10,8 @@ from utils import (
     gerar_alertas,
     salvar_teto,
     ler_teto,
-    verificar_teto
+    verificar_teto,
+    progresso_teto
 )
 # =============================
 
@@ -137,6 +138,32 @@ novo_teto = st.number_input(
 if st.button("Salvar teto"):
     salvar_teto(novo_teto)
     st.success("Teto mensal atualizado!")
+
+# =============================
+# PROGRESSO DO TETO
+# =============================
+
+st.divider()
+st.subheader("Progresso do mês")
+
+dados_progresso = progresso_teto()
+
+if dados_progresso:
+    gasto = dados_progresso["gasto"]
+    teto = dados_progresso["teto"]
+    percentual = dados_progresso["percentual"]
+
+    st.progress(percentual)
+
+    restante = max(teto - gasto, 0)
+
+    st.write(
+        f"💸 Gasto atual: **R$ {gasto:.2f}**  \n"
+        f"🎯 Teto mensal: **R$ {teto:.2f}**  \n"
+        f"🟢 Restante: **R$ {restante:.2f}**"
+    )
+else:
+    st.info("Defina um teto mensal para acompanhar o progresso.")
 
 # =============================
 # ALERTA DE TETO ULTRAPASSADO

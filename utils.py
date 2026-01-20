@@ -271,6 +271,32 @@ def verificar_teto():
 
     return None
 
+# =============================
+# GERENCIAR PROGRESSO TETO
+# =============================
+def progresso_teto():
+    teto = ler_teto()
+    if teto <= 0:
+        return None
+
+    df = pd.read_csv(CSV_FILE)
+    if df.empty:
+        return None
+
+    df["data"] = pd.to_datetime(df["data"])
+    df["mes"] = df["data"].dt.to_period("M").astype(str)
+
+    mes_atual = df["mes"].max()
+    gasto_atual = df[df["mes"] == mes_atual]["valor"].sum()
+
+    percentual = min(gasto_atual / teto, 1)
+
+    return {
+        "gasto": gasto_atual,
+        "teto": teto,
+        "percentual": percentual
+    }
+
 
 '''
     df = pd.read_csv(CSV_FILE)
