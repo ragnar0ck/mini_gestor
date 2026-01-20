@@ -2,8 +2,8 @@ import pandas as pd
 import json
 import os
 
-CONFIG_FILE = "config.json"
 CSV_FILE = "gastos.csv"
+CONFIG_FILE = "config.json"
 
 def adicionar_gasto(data, descricao, categoria, tipo, valor):
     df = pd.read_csv(CSV_FILE)
