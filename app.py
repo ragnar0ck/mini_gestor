@@ -11,7 +11,8 @@ from utils import (
     salvar_teto,
     ler_teto,
     verificar_teto,
-    progresso_teto
+    progresso_teto,
+    verificar_objetivo
 )
 # =============================
 
@@ -173,6 +174,21 @@ alerta_teto = verificar_teto()
 
 if alerta_teto:
     st.error(alerta_teto)
+
+# =============================
+# OBJETIVO MENSAL
+# =============================
+
+st.divider()
+st.subheader("Objetivo mensal")
+
+mensagem_objetivo = verificar_objetivo()
+
+if mensagem_objetivo:
+    st.info(mensagem_objetivo)
+else:
+    st.info("Ainda não há dados suficientes para avaliar o objetivo.")
+
 
 # =============================
 # COMPARAÇÃO ENTRE MESES

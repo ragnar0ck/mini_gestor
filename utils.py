@@ -297,6 +297,37 @@ def progresso_teto():
         "percentual": percentual
     }
 
+# =============================
+# VERIFICAR OBJETIVO DE GASTOS
+# =============================
+def verificar_objetivo():
+    df = pd.read_csv(CSV_FILE)
+    if df.empty:
+        return None
+
+    df["data"] = pd.to_datetime(df["data"])
+    df["mes"] = df["data"].dt.to_period("M").astype(str)
+
+    resumo = (
+        df.groupby("mes")["valor"]
+        .sum()
+        .reset_index()
+        .sort_values("mes")
+    )
+
+    if len(resumo) < 2:
+        return None
+
+    atual = resumo.iloc[-1]
+    anterior = resumo.iloc[-2]
+
+    diferenca = atual["valor"] - anterior["valor"]
+
+    if diferenca < 0:
+        return f"🎯 Parabéns! Você gastou **R$ {abs(diferenca):.2f} a menos** que no mês passado."
+    else:
+        return f"⚠️ Você está gastando **R$ {diferenca:.2f} a mais** que no mês passado."
+
 
 '''
     df = pd.read_csv(CSV_FILE)
