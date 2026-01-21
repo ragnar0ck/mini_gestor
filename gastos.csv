@@ -1,19 +1,61 @@
 data,descricao,categoria,tipo,valor
+data,descricao,categoria,tipo,valor
+2025-12-21,Dollarama,Mercado,Despesa,14.09
+2025-12-22,Superstore,Mercado,Despesa,4.00
+2025-12-23,Giant Tiger,Mercado,Despesa,7.44
+2025-12-24,Superstore,Mercado,Despesa,19.00
+2025-12-24,Superstore,Mercado,Despesa,6.84
+2025-12-26,BK,Alimentação,Despesa,40.92
+2025-12-27,Liquor Store,Lazer,Despesa,42.80
+2025-12-27,Costco,Mercado,Despesa,626.12
+2025-12-28,Tim Hortons,Alimentação,Despesa,8.14
+2025-12-29,Winners,Lazer,Despesa,66.67
+2025-12-29,Michaels,Lazer,Despesa,12.06
+2025-12-29,Michaels,Lazer,Despesa,34.48
+2026-01-29,Walmart,Mercado,Despesa,76.65
+2025-12-30,Shoppers,Saúde,Despesa,6.49
+2025-12-31,Circle K,Transporte,Despesa,37.18
+2025-12-31,Circle K,Transporte,Despesa,2.66
+2025-12-31,Liquor Store,Lazer,Despesa,16.99
+2025-12-31,Boston Pizza,Alimentação,Despesa,132.93
+2026-01-01,Insurance,Moradia,Despesa,37.16
+2026-01-01,Tim Hortons,Alimentação,Despesa,6.42
+2026-01-03,Air Cab,Transporte,Despesa,17.16
+2026-01-04,SuperStore,Mercado,Despesa,30.00
+2026-01-05,Shoppers,Saúde,Despesa,54.04
+2026-01-07,SuperStore,Mercado,Despesa,10.00
+2026-01-07,Tim Hortons,Alimentação,Despesa,3.45
+2026-01-09,Walmart,Mercado,Despesa,15.31
+2026-01-09,Walmart,Mercado,Despesa,59.73
+2026-01-09,Amazon,Mercado,Despesa,52.59
+2026-01-09,Chinese Food,Alimentação,Despesa,32.66
+2026-01-09,Walmart,Mercado,Despesa,22.98
+2026-01-10,Stacked Breakfast,Alimentação,Despesa,67.50
+2026-01-11,Liquor Store,Lazer,Despesa,26.47
+2026-01-11,SuperStore,Mercado,Despesa,32.00
+2026-01-12,Circle K,Transporte,Despesa,2.59
+2026-01-12,Tim Hortons,Alimentação,Despesa,4.59
+2026-01-13,Tim Hortons,Alimentação,Despesa,17.23
+2026-01-14,Circle K,Transporte,Despesa,52.77
+2026-01-15,Walmart,Mercado,Despesa,77.08
+2026-01-16,Air Cab,Transporte,Despesa,18.24
+2026-01-16,Tim Hortons,Alimentação,Despesa,4.59
+2026-01-16,Tim Hortons,Alimentação,Despesa,4.59
+2026-01-16,Rogers,Moradia,Despesa,126.50
+2026-01-17,SuperStore,Mercado,Despesa,22.00
+2026-01-18,SuperStore,Mercado,Despesa,16.00
+2026-01-18,Sports Rock,Alimentação,Despesa,73.84
+2026-01-19,SuperStore,Mercado,Despesa,36.00
+2026-01-19,Dollarama,Mercado,Despesa,2.94
+2026-01-20,Prime,Moradia,Despesa,11.49
+2026-01-21,SuperStore,Mercado,Despesa,6.00
+2026-01-21,Tim Hortons,Alimentação,Despesa,4.59
 2025-12-05,Costco,Mercado,Despesa,150.75
-2026-01-10,Cab,Transporte,Receita,32.56
 2025-12-15,Cab,Transporte,Despesa,120.50
-2026-01-04,Walmart,Alimentação,Despesa,80.00
-2026-01-10,Costco,Mercado,Receita,380.98
 2025-12-15,Costco,Mercado,Despesa,10.75
-2026-01-13,Cab,Transporte,Receita,30.00
 2025-12-19,Cab,Transporte,Despesa,120.50
-2026-01-06,Walmart,Alimentação,Despesa,186.67
-2026-01-10,Costco,Mercado,Receita,595.00
 2025-12-25,Costco,Mercado,Despesa,50.00
-2026-01-15,Cab,Transporte,Receita,45.00
 2025-12-28,Cab,Transporte,Despesa,90.00
-2026-01-08,Walmart,Alimentação,Despesa,120.00
-2026-01-12,Costco,Mercado,Receita,250.00
 2025-01-07,No Frills,Mercado,Dinheiro,342.41
 2025-01-11,Costco,Mercado,Débito,176.54
 2025-01-19,No Frills,Mercado,Débito,334.36
@@ -266,26 +308,5 @@ data,descricao,categoria,tipo,valor
 2025-12-23,ChatGPT Plus,Educação,Débito,48.45
 2025-12-03,ChatGPT Plus,Educação,Crédito,168.3
 2025-12-22,Curso Python,Educação,Dinheiro,228.4
-2026-01-18,Costco,Mercado,Dinheiro,273.77
-2026-01-16,No Frills,Mercado,Crédito,169.62
-2026-01-18,Costco,Mercado,Dinheiro,430.7
-2026-01-18,Burguer King,Alimentação,Dinheiro,180.43
-2026-01-01,Burguer King,Alimentação,Crédito,33.1
-2026-01-02,Burguer King,Alimentação,Débito,333.11
-2026-01-18,Telefone,Moradia,Crédito,1451.38
-2026-01-10,Telefone,Moradia,Dinheiro,1954.37
-2026-01-18,Aluguel,Moradia,Débito,2493.41
-2026-01-18,Manutenção Carro,Transporte,Débito,134.28
-2026-01-18,AirCab,Transporte,Crédito,321.45
-2026-01-02,WhiteCab,Transporte,Débito,453.85
-2026-01-05,Cinema,Lazer,Débito,317.26
-2026-01-12,Show,Lazer,Crédito,355.29
-2026-01-16,Show,Lazer,Dinheiro,405.07
-2026-01-18,Dentista,Saúde,Dinheiro,319.1
-2026-01-12,Exame,Saúde,Débito,198.89
-2026-01-08,Exame,Saúde,Débito,209.07
-2026-01-02,Livros,Educação,Dinheiro,262.15
-2026-01-18,ChatGPT Plus,Educação,Crédito,46.89
-2026-01-05,ChatGPT Plus,Educação,Crédito,145.92
 
 
