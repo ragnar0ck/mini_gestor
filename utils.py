@@ -1,19 +1,50 @@
 import pandas as pd
 import json
 import os
+from dateutil.relativedelta import relativedelta
 
 CSV_FILE = "gastos.csv"
 CONFIG_FILE = "config.json"
 
-def adicionar_gasto(data, descricao, categoria, tipo, valor):
-    df = pd.read_csv(CSV_FILE)
-    novo = pd.DataFrame([[data, descricao, categoria, tipo, valor]],
-                        columns=["data","descricao","categoria","tipo","valor"])
-    df = pd.concat([df, novo], ignore_index=True)
+def adicionar_gasto(data, descricao, categoria, valor, tipo, cartao=None):
+    df = ler_gastos()
+
+    data = pd.to_datetime(data)
+
+    dia_fechamento = None
+    if tipo == "Credit" and cartao:
+        dia_fechamento = obter_fechamento_cartao(cartao)
+
+    mes_referencia = calcular_mes_referencia(
+        data,
+        tipo,
+        dia_fechamento
+    )
+
+    novo_gasto = {
+        "data": data.strftime("%Y-%m-%d"),
+        "descricao": descricao,
+        "categoria": categoria,
+        "valor": valor,
+        "tipo": tipo,
+        "cartao": cartao,
+        "mes_referencia": mes_referencia
+    }
+
+    df = pd.concat([df, pd.DataFrame([novo_gasto])], ignore_index=True)
     df.to_csv(CSV_FILE, index=False)
 
 def ler_gastos():
-    return pd.read_csv(CSV_FILE)
+    if not os.path.exists(CSV_FILE):
+        return pd.DataFrame()
+
+    df = pd.read_csv(CSV_FILE)
+
+    if "mes_referencia" not in df.columns:
+        df["data"] = pd.to_datetime(df["data"])
+        df["mes_referencia"] = df["data"].dt.to_period("M").astype(str)
+
+    return df
 
 def listar_meses_disponiveis():
     df = pd.read_csv(CSV_FILE)
@@ -26,19 +57,19 @@ def listar_meses_disponiveis():
     meses = sorted(df["mes_ano"].unique(), reverse=True)
     return meses
 
-
-def resumo_por_mes(mes_ano):
-    df = pd.read_csv(CSV_FILE)
+def resumo_por_mes(mes_referencia):
+    df = ler_gastos()
     if df.empty:
         return 0, pd.DataFrame()
 
-    df["data"] = pd.to_datetime(df["data"])
-    df["mes_ano"] = df["data"].dt.to_period("M").astype(str)
-
-    df_mes = df[df["mes_ano"] == mes_ano]
+    df_mes = df[df["mes_referencia"] == mes_referencia]
 
     total = df_mes["valor"].sum()
-    por_categoria = df_mes.groupby("categoria")["valor"].sum().reset_index()
+    por_categoria = (
+        df_mes.groupby("categoria")["valor"]
+        .sum()
+        .reset_index()
+    )
 
     return total, por_categoria
 
@@ -67,166 +98,72 @@ def comparar_meses(mes_base, mes_comparacao):
 
     return comparacao.reset_index()
 
-def gastos_por_categoria_mes(mes_ano):
-    df = pd.read_csv(CSV_FILE)
+def gastos_por_categoria_mes(mes_referencia):
+    df = ler_gastos()
     if df.empty:
-        return pd.DataFrame()
+        return pd.Series(dtype=float)
 
-    df["data"] = pd.to_datetime(df["data"])
-    df["mes_ano"] = df["data"].dt.to_period("M").astype(str)
-
-    df_mes = df[df["mes_ano"] == mes_ano]
+    df_mes = df[df["mes_referencia"] == mes_referencia]
 
     return (
-        df_mes
-        .groupby("categoria")["valor"]
+        df_mes.groupby("categoria")["valor"]
         .sum()
-        .reset_index()
+        .sort_values(ascending=False)
     )
 
-def total_por_mes(ultimos_meses=12):
-    df = pd.read_csv(CSV_FILE)
+def total_por_mes():
+    df = ler_gastos()
     if df.empty:
-        return pd.DataFrame()
+        return pd.Series(dtype=float)
 
-    df["data"] = pd.to_datetime(df["data"])
-    df["mes"] = df["data"].dt.to_period("M").astype(str)
-
-    resumo = (
-        df.groupby("mes")["valor"]
+    return (
+        df.groupby("mes_referencia")["valor"]
         .sum()
-        .reset_index()
-        .sort_values("mes")
-        .tail(ultimos_meses)
-        .set_index("mes")
+        .sort_index()
     )
 
-    return resumo
-
-def gerar_insights():
-    df = pd.read_csv(CSV_FILE)
+def gerar_insights(mes_referencia):
+    df = ler_gastos()
     if df.empty:
         return []
 
-    df["data"] = pd.to_datetime(df["data"])
-    df["mes"] = df["data"].dt.to_period("M").astype(str)
-
-    resumo_mes = (
-        df.groupby("mes")["valor"]
-        .sum()
-        .reset_index()
-        .sort_values("mes")
-    )
-
+    df_mes = df[df["mes_referencia"] == mes_referencia]
     insights = []
 
-    # Insight 1 - tendência
-    if len(resumo_mes) >= 3:
-        ultimos = resumo_mes.tail(3)["valor"]
-        if ultimos.is_monotonic_increasing:
-            insights.append("📈 Seus gastos estão aumentando nos últimos meses.")
-        elif ultimos.is_monotonic_decreasing:
-            insights.append("📉 Seus gastos estão diminuindo nos últimos meses.")
-        else:
-            insights.append("➖ Seus gastos estão relativamente estáveis.")
-
-    # Insight 2 - comparação mês atual x anterior
-    if len(resumo_mes) >= 2:
-        atual = resumo_mes.iloc[-1]["valor"]
-        anterior = resumo_mes.iloc[-2]["valor"]
-
-        if anterior > 0:
-            variacao = ((atual - anterior) / anterior) * 100
-            if variacao > 0:
-                insights.append(f"⚠️ Você gastou {variacao:.1f}% a mais que no mês anterior.")
-            else:
-                insights.append(f"✅ Você gastou {abs(variacao):.1f}% a menos que no mês anterior.")
-
-    # Insight 3 - categoria com maior gasto no mês atual
-    mes_atual = resumo_mes.iloc[-1]["mes"]
-    df_mes_atual = df[df["mes"] == mes_atual]
-
-    top_categoria = (
-        df_mes_atual
-        .groupby("categoria")["valor"]
+    por_categoria = (
+        df_mes.groupby("categoria")["valor"]
         .sum()
-        .idxmax()
+        .sort_values(ascending=False)
     )
 
-    insights.append(f"💸 A categoria que mais pesou este mês foi **{top_categoria}**.")
-
-    # Insight 4 - acima da média
-    media = resumo_mes["valor"].mean()
-    atual = resumo_mes.iloc[-1]["valor"]
-
-    if atual > media * 1.1:
-        insights.append("🚨 Seus gastos deste mês estão bem acima da média.")
+    if not por_categoria.empty:
+        cat = por_categoria.index[0]
+        val = por_categoria.iloc[0]
+        insights.append(
+            f"💡 Sua maior despesa nesta fatura foi **{cat}** (${val:.2f})"
+        )
 
     return insights
 
 # =============================
 # GERAR ALERTAS AUTOMÁTICOS
 # =============================
-def gerar_alertas():
-    df = pd.read_csv(CSV_FILE)
-    if df.empty:
-        return []
-
-    df["data"] = pd.to_datetime(df["data"])
-    df["mes"] = df["data"].dt.to_period("M").astype(str)
-
+def gerar_alertas(mes_referencia, teto):
     alertas = []
 
-    resumo_mes = (
-        df.groupby("mes")["valor"]
-        .sum()
-        .reset_index()
-        .sort_values("mes")
-    )
+    estourou, total = verificar_teto(mes_referencia, teto)
 
-    if len(resumo_mes) < 2:
-        return alertas
-
-    mes_atual = resumo_mes.iloc[-1]
-    mes_anterior = resumo_mes.iloc[-2]
-
-    # 🔔 ALERTA 1 — acima da média
-    media = resumo_mes["valor"].mean()
-    if mes_atual["valor"] > media * 1.2:
+    if estourou:
         alertas.append(
-            "🚨 Atenção: seus gastos deste mês estão **bem acima da média histórica**."
+            f"🚨 Você ultrapassou o teto da fatura ({total:.2f})"
+        )
+    elif total >= teto * 0.8:
+        alertas.append(
+            f"⚠️ Atenção: você já usou 80% do teto da fatura"
         )
 
-    # 🔔 ALERTA 2 — crescimento brusco
-    if mes_anterior["valor"] > 0:
-        variacao = ((mes_atual["valor"] - mes_anterior["valor"]) / mes_anterior["valor"]) * 100
-        if variacao > 20:
-            alertas.append(
-                f"📈 Seus gastos aumentaram **{variacao:.1f}%** em relação ao mês passado."
-            )
-
-    # 🔔 ALERTA 3 — categoria fora do padrão
-    df_cat = (
-        df.groupby(["mes", "categoria"])["valor"]
-        .sum()
-        .reset_index()
-    )
-
-    atual_cat = df_cat[df_cat["mes"] == mes_atual["mes"]]
-
-    medias_cat = (
-        df_cat.groupby("categoria")["valor"]
-        .mean()
-    )
-
-    for _, row in atual_cat.iterrows():
-        media_categoria = medias_cat.get(row["categoria"], 0)
-        if media_categoria > 0 and row["valor"] > media_categoria * 1.5:
-            alertas.append(
-                f"💣 Gasto elevado em **{row['categoria']}** este mês."
-            )
-
     return alertas
+
 
 # =============================
 # GERENCIAR TETO MENSAL
@@ -240,36 +177,19 @@ def ler_teto():
 
     return data.get("teto_mensal", 0)
 
-
 def salvar_teto(valor):
     with open(CONFIG_FILE, "w") as f:
         json.dump({"teto_mensal": valor}, f)
 
-def verificar_teto():
-    teto = ler_teto()
-    if teto <= 0:
-        return None
-
-    df = pd.read_csv(CSV_FILE)
+def verificar_teto(mes_referencia, teto):
+    df = ler_gastos()
     if df.empty:
-        return None
+        return False, 0
 
-    df["data"] = pd.to_datetime(df["data"])
-    df["mes"] = df["data"].dt.to_period("M").astype(str)
+    total = df[df["mes_referencia"] == mes_referencia]["valor"].sum()
 
-    mes_atual = df["mes"].max()
-    gasto_atual = df[df["mes"] == mes_atual]["valor"].sum()
+    return total >= teto, total
 
-    percentual = gasto_atual / teto
-
-    if percentual >= 1:
-        return f"🚨 Você **ultrapassou** o teto mensal! (R$ {gasto_atual:.2f} / R$ {teto:.2f})"
-    elif percentual >= 0.9:
-        return f"⚠️ Atenção: você já usou **90% do teto mensal**."
-    elif percentual >= 0.7:
-        return f"👀 Você já usou **70% do teto mensal**."
-
-    return None
 
 # =============================
 # GERENCIAR PROGRESSO TETO
@@ -327,6 +247,30 @@ def verificar_objetivo():
         return f"🎯 Parabéns! Você gastou **R$ {abs(diferenca):.2f} a menos** que no mês passado."
     else:
         return f"⚠️ Você está gastando **R$ {diferenca:.2f} a mais** que no mês passado."
+
+# =============================
+# CALCULAR MÊS DE REFERÊNCIA
+# =============================
+def calcular_mes_referencia(data, tipo, dia_fechamento=None):
+    if tipo == "Crédito" and dia_fechamento:
+        if data.day > dia_fechamento:
+            data_ref = data + relativedelta(months=1)
+        else:
+            data_ref = data
+    else:
+        data_ref = data
+
+    return data_ref.strftime("%Y-%m")
+
+# =============================
+# OBTER FECHAMENTO DO CARTÃO
+# =============================
+def obter_fechamento_cartao(nome_cartao):
+    df = pd.read_csv("cartoes.csv")
+    linha = df[df["cartao"] == nome_cartao]
+    if linha.empty:
+        return None
+    return int(linha.iloc[0]["fechamento"])
 
 
 '''
