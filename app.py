@@ -14,6 +14,7 @@ from utils import (
     progresso_teto,
     verificar_objetivo
 )
+
 # =============================
 
 st.set_page_config(page_title="Mini Gestor Financeiro Familiar", layout="centered")
@@ -178,7 +179,6 @@ if alerta_teto:
 # =============================
 # OBJETIVO MENSAL
 # =============================
-
 st.divider()
 st.subheader("Objetivo mensal")
 
