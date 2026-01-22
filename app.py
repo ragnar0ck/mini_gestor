@@ -273,7 +273,7 @@ elif menu == "🧠 Insights & alertas":
             st.info(f"✅ Total gasto até agora: ${total_gasto:.2f} / Teto: ${teto_global:.2f}")
 
         # 4️⃣ Barra visual de progresso
-        st.progress(min(percentual, 100))
+        st.progress(min(int(percentual), 100))
 
         # 5️⃣ Insights automáticos
         insights = gerar_insights(mes_atual)
