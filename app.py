@@ -269,13 +269,19 @@ elif menu == "🧠 Insights & alertas":
     st.divider()
     st.subheader("Alertas")
 
-    alertas = gerar_alertas()
+    meses_disponiveis = listar_meses_disponiveis()
+    mes_atual = meses_disponiveis[0]  # fatura mais recente
 
-    if not alertas:
-        st.success("Tudo sob controle este mês 👍")
-    else:
+    teto_global = ler_teto()  # retorna o valor do teto mensal
+
+    alertas = gerar_alertas(mes_atual, teto_global)
+
+    if alertas:
         for alerta in alertas:
             st.warning(alerta)
+    else:
+        st.info("Nenhum alerta neste momento.")
+
 
 # =============================
 # ALERTA DE TETO ULTRAPASSADO
