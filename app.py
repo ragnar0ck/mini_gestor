@@ -252,13 +252,16 @@ elif menu == "🧠 Insights & alertas":
     st.divider()
     st.subheader("Insights automáticos")
 
-    insights = gerar_insights()
+    meses_disponiveis = listar_meses_disponiveis()
+    mes_atual = meses_disponiveis[0]
+
+    insights = gerar_insights(mes_atual)
 
     if not insights:
         st.info("Ainda não há dados suficientes para gerar insights.")
     else:
         for insight in insights:
-            st.write(insight)
+            st.info(insight)
 
 # =============================
 # ALERTAS AUTOMÁTICOS
