@@ -176,8 +176,8 @@ elif menu == "📈 Histórico":
         mes_atual = meses_disponiveis[0]
         mes_anterior = meses_disponiveis[1]
 
-        df_atual = gastos_por_categoria_mes(mes_atual)
-        df_anterior = gastos_por_categoria_mes(mes_anterior)
+        df_atual = gastos_por_categoria_mes(mes_atual).reset_index()
+        df_anterior = gastos_por_categoria_mes(mes_anterior).reset_index()
 
         df_linhas = (
             df_atual
@@ -192,6 +192,8 @@ elif menu == "📈 Histórico":
         )
 
         st.line_chart(df_linhas)
+
+
 
 # =============================
 # EVOLUÇÃO DE GASTOS
