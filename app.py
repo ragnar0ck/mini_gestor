@@ -208,14 +208,20 @@ elif menu == "📈 Histórico":
         value=6
     )
 
-    df_evolucao = total_por_mes()
-    df_evolucao.columns = ["mes_referencia", "total"]
+    serie_evolucao = total_por_mes()
 
-    df_evolucao = df_evolucao.tail(qtd_meses)
-
-    if df_evolucao.empty:
+    if serie_evolucao.empty:
         st.info("Ainda não há dados suficientes.")
     else:
+        df_evolucao = (
+            serie_evolucao
+            .rename("total")
+            .reset_index()
+        )
+
+        df_evolucao.columns = ["mes_referencia", "total"]
+        df_evolucao = df_evolucao.tail(qtd_meses)
+
         st.line_chart(
             df_evolucao.set_index("mes_referencia")["total"]
         )
