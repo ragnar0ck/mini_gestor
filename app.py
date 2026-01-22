@@ -133,9 +133,9 @@ elif menu == "📌 Visão geral":
         restante = max(teto - gasto, 0)
 
         st.write(
-            f"💸 Gasto atual: **R$ {gasto:.2f}**  \n"
-            f"🎯 Teto mensal: **R$ {teto:.2f}**  \n"
-            f"🟢 Restante: **R$ {restante:.2f}**"
+            f"💸 Gasto atual: **CAD {gasto:.2f}**  \n"
+            f"🎯 Teto mensal: **CAD {teto:.2f}**  \n"
+            f"🟢 Restante: **CAD {restante:.2f}**"
         )
     else:
         st.info("Defina um teto mensal para acompanhar o progresso.")
