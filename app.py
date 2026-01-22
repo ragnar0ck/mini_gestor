@@ -287,7 +287,7 @@ elif menu == "🧠 Insights & alertas":
 # ALERTA DE TETO ULTRAPASSADO
 # =============================
 
-    alerta_teto = verificar_teto()
+    alerta_teto = verificar_teto(mes_atual, teto_global)
 
     if alerta_teto:
         st.error(alerta_teto)
