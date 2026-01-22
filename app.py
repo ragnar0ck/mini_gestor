@@ -264,34 +264,42 @@ elif menu == "🧠 Insights & alertas":
             st.info(insight)
 
 # =============================
-# ALERTAS AUTOMÁTICOS
+# PAINEL DE ALERTAS E INSIGHTS
 # =============================
     st.divider()
-    st.subheader("Alertas")
+    st.subheader("Alertas e Insights da fatura")
 
+    # 1️⃣ Garantir que temos faturas
     meses_disponiveis = listar_meses_disponiveis()
-    mes_atual = meses_disponiveis[0]  # fatura mais recente
-
-    teto_global = ler_teto()  # retorna o valor do teto mensal
-
-    alertas = gerar_alertas(mes_atual, teto_global)
-
-    if alertas:
-        for alerta in alertas:
-            st.warning(alerta)
+    if not meses_disponiveis:
+        st.info("Ainda não há faturas registradas.")
     else:
-        st.info("Nenhum alerta neste momento.")
+        mes_atual = meses_disponiveis[0]       # fatura mais recente
+        teto_global = ler_teto() or 0          # pega o teto global ou 0 como fallback
 
+        # 2️⃣ Verificar gastos
+        estourou, total_gasto = verificar_teto(mes_atual, teto_global)
+        percentual = (total_gasto / teto_global) * 100 if teto_global > 0 else 0
 
-# =============================
-# ALERTA DE TETO ULTRAPASSADO
-# =============================
+        # 3️⃣ Renderização de alerta de teto
+        if estourou:
+            st.error(f"🚨 Você ultrapassou o teto da fatura! Total gasto: ${total_gasto:.2f} / Teto: ${teto_global:.2f}")
+        elif percentual >= 80:
+            st.warning(f"⚠️ Atenção: você já utilizou {percentual:.0f}% do teto da fatura. Total gasto: ${total_gasto:.2f} / Teto: ${teto_global:.2f}")
+        else:
+            st.info(f"✅ Total gasto até agora: ${total_gasto:.2f} / Teto: ${teto_global:.2f}")
 
-    alerta_teto = verificar_teto(mes_atual, teto_global)
+        # 4️⃣ Barra visual de progresso
+        st.progress(min(percentual, 100))
 
-    if alerta_teto:
-        st.error(alerta_teto)
-
+        # 5️⃣ Insights automáticos
+        insights = gerar_insights(mes_atual)
+        if insights:
+            st.subheader("Insights automáticos")
+            for insight in insights:
+                st.info(f"💡 {insight}")
+        else:
+            st.info("Ainda não há insights suficientes para esta fatura.")
 
 elif menu == "⚙️ Configurações":
     st.title("Configurações")
