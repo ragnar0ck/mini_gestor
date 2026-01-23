@@ -12,7 +12,8 @@ from utils import (
     ler_teto,
     verificar_teto,
     progresso_teto,
-    verificar_objetivo
+    verificar_objetivo,
+    gerar_despesas_fixas_mes_atual,
 )
 
 # =============================
@@ -107,7 +108,7 @@ elif menu == "📌 Visão geral":
 
         total_mes, gastos_categoria = resumo_por_mes(mes_selecionado)
 
-        st.metric("Total gasto no mês", f"R$ {total_mes:.2f}")
+        st.metric("Total gasto no mês", f"CAD {total_mes:.2f}")
 
         if not gastos_categoria.empty:
             st.bar_chart(
@@ -175,6 +176,8 @@ elif menu == "📈 Histórico":
     else:
         mes_atual = meses_disponiveis[0]
         mes_anterior = meses_disponiveis[1]
+
+        gerar_despesas_fixas_mes_atual(mes_atual)
 
         df_atual = gastos_por_categoria_mes(mes_atual).reset_index()
         df_anterior = gastos_por_categoria_mes(mes_anterior).reset_index()

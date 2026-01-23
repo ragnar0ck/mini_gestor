@@ -46,6 +46,64 @@ def ler_gastos():
 
     return df
 
+# =============================
+def garantir_coluna_fixo(df):
+    if "fixo" not in df.columns:
+        df["fixo"] = False
+    return df
+# =============================
+
+def gerar_despesas_fixas_mes_atual(mes_atual):
+    df = pd.read_csv(CSV_FILE)
+    df = garantir_coluna_fixo(df)
+
+    if df.empty:
+        return
+
+    df["data"] = pd.to_datetime(df["data"])
+    df["mes_ano"] = df["data"].dt.to_period("M").astype(str)
+
+    meses = sorted(df["mes_ano"].unique())
+    if mes_atual not in meses:
+        return
+
+    idx = meses.index(mes_atual)
+    if idx == 0:
+        return  # não há mês anterior
+
+    mes_anterior = meses[idx - 1]
+
+    # despesas fixas do mês anterior
+    fixas_anteriores = df[
+        (df["mes_ano"] == mes_anterior) & (df["fixo"] == True)
+    ]
+
+    if fixas_anteriores.empty:
+        return
+
+    # despesas já existentes no mês atual
+    despesas_mes_atual = df[df["mes_ano"] == mes_atual]
+
+    novas_linhas = []
+
+    for _, row in fixas_anteriores.iterrows():
+        existe = (
+            (despesas_mes_atual["descricao"] == row["descricao"]) &
+            (despesas_mes_atual["categoria"] == row["categoria"])
+        ).any()
+
+        if not existe:
+            nova_linha = row.copy()
+            nova_linha["data"] = pd.to_datetime(f"{mes_atual}-01")
+            nova_linha["mes_ano"] = mes_atual
+            novas_linhas.append(nova_linha)
+
+    if novas_linhas:
+        df = pd.concat([df, pd.DataFrame(novas_linhas)], ignore_index=True)
+        df.drop(columns=["mes_ano"], inplace=True)
+        df.to_csv(CSV_FILE, index=False)
+# =============================
+
 def listar_meses_disponiveis():
     df = pd.read_csv(CSV_FILE)
     if df.empty:
@@ -164,7 +222,6 @@ def gerar_alertas(mes_referencia, teto):
 
     return alertas
 
-
 # =============================
 # GERENCIAR TETO MENSAL
 # =============================
@@ -189,7 +246,6 @@ def verificar_teto(mes_referencia, teto):
     total = df[df["mes_referencia"] == mes_referencia]["valor"].sum()
 
     return total >= teto, total
-
 
 # =============================
 # GERENCIAR PROGRESSO TETO
