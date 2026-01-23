@@ -6,7 +6,29 @@ from dateutil.relativedelta import relativedelta
 CSV_FILE = "gastos.csv"
 CONFIG_FILE = "config.json"
 
-def adicionar_gasto(data, descricao, categoria, valor, tipo, cartao=None):
+# =============================
+def garantir_coluna_fixo(df):
+    if "fixo" not in df.columns:
+        df["fixo"] = False
+    return df
+# =============================
+
+def adicionar_gasto(data, descricao, categoria, valor, forma_pagamento, fixo):
+    novo = {
+        "data": data,
+        "descricao": descricao,
+        "categoria": categoria,
+        "valor": valor,
+        "forma_pagamento": forma_pagamento,
+        "fixo": fixo
+    }
+
+    df = ler_gastos()
+    df = pd.concat([df, pd.DataFrame([novo])], ignore_index=True)
+    df.to_csv(CSV_FILE, index=False)
+
+
+'''def adicionar_gasto(data, descricao, categoria, valor, tipo, cartao=None):
     df = ler_gastos()
 
     data = pd.to_datetime(data)
@@ -33,26 +55,23 @@ def adicionar_gasto(data, descricao, categoria, valor, tipo, cartao=None):
 
     df = pd.concat([df, pd.DataFrame([novo_gasto])], ignore_index=True)
     df.to_csv(CSV_FILE, index=False)
-
+'''
 def ler_gastos():
     if not os.path.exists(CSV_FILE):
         return pd.DataFrame()
 
     df = pd.read_csv(CSV_FILE)
+    df = garantir_coluna_fixo(df)
+    df["data"] = pd.to_datetime(df["data"])
+    return df
 
+'''
     if "mes_referencia" not in df.columns:
         df["data"] = pd.to_datetime(df["data"])
         df["mes_referencia"] = df["data"].dt.to_period("M").astype(str)
 
     return df
-
-# =============================
-def garantir_coluna_fixo(df):
-    if "fixo" not in df.columns:
-        df["fixo"] = False
-    return df
-# =============================
-
+'''
 def gerar_despesas_fixas_mes_atual(mes_atual):
     df = pd.read_csv(CSV_FILE)
     df = garantir_coluna_fixo(df)

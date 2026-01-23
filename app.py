@@ -71,17 +71,38 @@ if menu == "➕ Registrar gasto":
     with st.form("form_gasto"):
         data = st.date_input("Data")
         descricao = st.text_input("Descrição")
-        tipo = st.selectbox("Tipo de pagamento", ["Débito", "Crédito", "Dinheiro"])
-        valor = st.number_input("Valor", min_value=0.0, format="%.2f")
+
+        tipo = st.selectbox(
+            "Tipo de pagamento",
+            ["Débito", "Crédito", "Dinheiro"]
+        )
+
+        valor = st.number_input(
+            "Valor",
+            min_value=0.0,
+            format="%.2f"
+        )
+
+        fixo = st.checkbox("Despesa fixa (repete mensalmente)")
 
         submitted = st.form_submit_button("Adicionar gasto")
 
         if submitted:
             if not categoria_final:
                 st.warning("Informe a categoria do gasto.")
+            elif valor <= 0:
+                st.warning("Informe um valor maior que zero.")
             else:
-                adicionar_gasto(data, descricao, categoria_final, tipo, valor)
+                adicionar_gasto(
+                    data=data,
+                    descricao=descricao,
+                    categoria=categoria_final,
+                    valor=valor,
+                    forma_pagamento=tipo,
+                    fixo=fixo
+                )
                 st.success("Gasto adicionado com sucesso!")
+
 
 elif menu == "📌 Visão geral":
     st.title("Visão geral do mês")
