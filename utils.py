@@ -62,7 +62,7 @@ def ler_gastos():
 
     df = pd.read_csv(CSV_FILE)
     df = garantir_coluna_fixo(df)
-    df["data"] = pd.to_datetime(df["data"])
+    df["data"] = pd.to_datetime(df["data"], errors="coerce")
     return df
 
 '''
@@ -79,7 +79,7 @@ def gerar_despesas_fixas_mes_atual(mes_atual):
     if df.empty:
         return
 
-    df["data"] = pd.to_datetime(df["data"])
+    df["data"] = pd.to_datetime(df["data"], errors="coerce")
     df["mes_ano"] = df["data"].dt.to_period("M").astype(str)
 
     meses = sorted(df["mes_ano"].unique())
@@ -125,14 +125,21 @@ def gerar_despesas_fixas_mes_atual(mes_atual):
 
 def listar_meses_disponiveis():
     df = pd.read_csv(CSV_FILE)
-    if df.empty:
+
+    if df.empty or "data" not in df.columns:
         return []
 
-    df["data"] = pd.to_datetime(df["data"])
+    df["data"] = pd.to_datetime(
+        df["data"],
+        errors="coerce"  # <- ESSENCIAL
+    )
+
+    df = df.dropna(subset=["data"])
+
     df["mes_ano"] = df["data"].dt.to_period("M").astype(str)
 
-    meses = sorted(df["mes_ano"].unique(), reverse=True)
-    return meses
+    return sorted(df["mes_ano"].unique(), reverse=True)
+
 
 def resumo_por_mes(mes_referencia):
     df = ler_gastos()
@@ -155,7 +162,7 @@ def comparar_meses(mes_base, mes_comparacao):
     if df.empty:
         return pd.DataFrame()
 
-    df["data"] = pd.to_datetime(df["data"])
+    df["data"] = pd.to_datetime(df["data"], errors="coerce")
     df["mes_ano"] = df["data"].dt.to_period("M").astype(str)
 
     df_filtrado = df[df["mes_ano"].isin([mes_base, mes_comparacao])]
@@ -278,7 +285,7 @@ def progresso_teto():
     if df.empty:
         return None
 
-    df["data"] = pd.to_datetime(df["data"])
+    df["data"] = pd.to_datetime(df["data"], errors="coerce")
     df["mes"] = df["data"].dt.to_period("M").astype(str)
 
     mes_atual = df["mes"].max()
@@ -300,7 +307,7 @@ def verificar_objetivo():
     if df.empty:
         return None
 
-    df["data"] = pd.to_datetime(df["data"])
+    df["data"] = pd.to_datetime(df["data"], errors="coerce")
     df["mes"] = df["data"].dt.to_period("M").astype(str)
 
     resumo = (
